@@ -50,7 +50,7 @@ Disk_ReadSector_Fail:
     CLC                                           ;1; Clear The Carry Flag
 	JMP Disk_ReadSector                       ;2; JMP Move Instruction Pointer [CS:IP] 
     CLI                                           ;1; Disable Interrupts
-    HLT                                           ;1; Stops CPU Execution
+    HLT                                           ;1; Stop CPU Execution
 
 TIMES 510-($-$$) DB 0                             ; Zero Padding Until End Of Sector (-2)
 DW 0xAA55                                         ; Boot Signature Bytes
