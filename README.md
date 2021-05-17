@@ -1,7 +1,7 @@
 # Assembly
 
-This repository mostly contains machine language code for Intel's x86 CPUs. 
-A script for the windows command line is also available to help compile Assembly programs to binaries.
+This repository mostly contains machine language code for Intel's x86 CPUs.  
+A script for the windows command line is also available to help compile assembly programs to disc images.
 
 Contents :  
 
