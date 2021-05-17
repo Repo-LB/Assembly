@@ -44,42 +44,42 @@ Func_movecursor:
 
 CODE:
     
-    mov ah, 00h    ; Function code 00h for INT 16h
-    int 16h        ; Pause and read the next key press
+    mov ah, 00h           ; Function code 00h for INT 16h
+    int 16h               ; Pause and read the next key press
 
-    cmp al, 08h    ; Checks for ASCII value of Backspace using 
-    je KBD_BS      ; Instruction CMP [If (reg)-(value)=0 Then Goto Func]
+    cmp al, 08h           ; Check for ASCII value of Backspace using 
+    je KBD_BS             ; Instruction CMP [If (reg)-(value)=0 Then Goto Func]
 
     cmp ah, 48h  
-    je KBD_up        ; Checks for ASCII value of ArrowKey Up
+    je KBD_up             ; Check for ASCII value of ArrowKey Up
 
     cmp ah, 50h  
-    je KBD_down      ; Checks for ASCII value of ArrowKey Down
+    je KBD_down           ; Check for ASCII value of ArrowKey Down
 
     cmp ah, 4Dh  
-    je KBD_right     ; Checks for ASCII value of ArrowKey Right
+    je KBD_right          ; Check for ASCII value of ArrowKey Right
 
     cmp ah, 4Bh
-    je KBD_left      ; Checks for ASCII value of ArrowKey Left
+    je KBD_left           ; Check for ASCII value of ArrowKey Left
 
-    jmp KBD_unknown  ; If key doesn't get tested before, try ASCII print
+    jmp KBD_unknown       ; If key doesn't get tested before, try ASCII print
 
 ;##################################################
 
 K_backspace:
 
     mov ah, 0Eh    
-    mov bh, 0      ;Page 0
-    mov bl, 4      ;COLOR
-    mov al, 08h    ;ASCII
+    mov bh, 0             ;Page 0
+    mov bl, 4             ;COLOR
+    mov al, 08h           ;ASCII
     int 10h
     ret
 
 K_space:
     mov ah, 0Eh 
-    mov bh, 0      ;PAGE 0
-    mov bl, 4      ;COLOR
-    mov al, 20h    ;ASCII
+    mov bh, 0             ;PAGE 0
+    mov bl, 4             ;COLOR
+    mov al, 20h           ;ASCII
     int 10h
     ret
 
@@ -94,63 +94,63 @@ KBD_BS:
 
 KBD_up:
 
-    mov ah, 03h    ; Function Code 03h Get Cusor Position
+    mov ah, 03h           ; Function Code 03h Get Cursor Position
     int 10h        
 
-    mov ah, 02h    ; Function Code 02h Set Cursor Position
-    sub dh, 1      ; DH = Y - 1
-    mov bh, 0x00   ; PAGE 0
-    int 10h
+    mov ah, 02h           ; Function Code 02h Set Cursor Position
+    sub dh, 1             ; DH = Y - 1
+    mov bh, 0x00          ; PAGE 0
+    int 10h 
 
     jmp CODE       
 
 KBD_down:
 
-    mov ah, 03h    ; Function Code 03h Get Cusor Position
+    mov ah, 03h           ; Function Code 03h Get Cursor Position
     int 10h        
 
-    mov ah, 02h    ; Function Code 02h Set Cursor Position
-    add dh, 1      ; DH = Y + 1
-    mov bh, 0x00   ; PAGE 0
+    mov ah, 02h           ; Function Code 02h Set Cursor Position
+    add dh, 1             ; DH = Y + 1
+    mov bh, 0x00          ; PAGE 0
     int 10h
 
     jmp CODE
 
 KBD_right:
 
-    mov ah, 03h    ; Function Code 03h Get Cusor Position
+    mov ah, 03h           ; Function Code 03h Get Cursor Position
     int 10h        
 
-    mov ah, 02h    ; Function Code 02h Set Cursor Position
-    add dl, 1      ; DH = X + 1
-    mov bh, 0x00   ; PAGE 0
+    mov ah, 02h           ; Function Code 02h Set Cursor Position
+    add dl, 1             ; DH = X + 1
+    mov bh, 0x00          ; PAGE 0
     int 10h
 
     jmp CODE
 
 KBD_left:
 
-    mov ah, 03h    ; Function Code 03h Get Cusor Position
+    mov ah, 03h           ; Function Code 03h Get Cusor Position
     int 10h        
 
-    mov ah, 02h    ; Function Code 02h Set Cursor Position
-    sub dl, 1      ; DH = X - 1
-    mov bh, 0x00   ; PAGE 0
+    mov ah, 02h           ; Function Code 02h Set Cursor Position
+    sub dl, 1             ; DH = X - 1
+    mov bh, 0x00          ; PAGE 0
     int 10h
 
     jmp CODE
 
 KBD_unknown:
 
-    mov dl, al  ; Store ASCII value from AL in DL
-    mov ah, 0Eh ; Function code 0x0e for INT 10h (Teletype)
-    mov bh, 0   ; Page 0
-    mov bl, 4   ; Text and background colors (16 w/o blink attribute)
-    mov al, dl  ; Moves back ASCII value from DL to AL
+    mov dl, al            ; Store ASCII value from AL in DL
+    mov ah, 0Eh           ; Function code 0x0e for INT 10h (Teletype)
+    mov bh, 0             ; Page 0
+    mov bl, 4             ; Text and background colors (16 w/o blink attribute)
+    mov al, dl            ; Move back ASCII value from DL to AL
 
-    int 10h     ; Apply Text Input and Exit
+    int 10h               ; Apply Text Input and Exit
     jmp CODE
 
 ;##################################################
 
-times 512-($-$$) db 0  ; Pad remainder of boot sector with 0s
+times 512-($-$$) db 0     ; Pad remainder of boot sector with 0s
